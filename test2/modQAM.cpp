@@ -15,7 +15,7 @@ private:
     int symbolIndex;
 
 public:
-    int numSamples = 10;
+    int numSamples = 1000;
     vector<complex<double>> signal;
 
 
@@ -42,8 +42,8 @@ public:
             int QAM64_value[8] = { -7, -5, -3, -1, 1, 3, 5, 7 };
             I = QAM64_value[I_bits];
             Q = QAM64_value[Q_bits];
-           // cout << "I:" << I << " Q: " << Q << endl;
-          //  cout << bits[0] << " "<< bits[1] << "  " << bits[2]<<endl;
+            //  cout << "I:" << I << " Q: " << Q << endl;
+            // cout << bits[0] << " "<< bits[1] << "  " << bits[2]<<endl;
         }
         else {
             cout << "ERROR: invalid symbols or modTYPE" << endl;

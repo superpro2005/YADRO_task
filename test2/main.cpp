@@ -18,6 +18,7 @@ vector<int> gen_binary(int num_bits) {
     vector<int> binary;
     for (int i = 0; i < num_bits; i++) {
         binary.push_back(dis(gen));
+		//cout << binary[i] << " ";
     }
     cout << endl;
     return binary;
@@ -75,8 +76,8 @@ void test_modulation(ModulationType mod_type) {
 
     demodQAM demodulation;
 
-
-    for (double sigm = 0.0; sigm <= 1; sigm += 0.1) {
+    vector<double> sigma = { 1, 2, 5, 10,15, 20, 25 };
+    for (double sigm: sigma) {
 
         vector<complex<double>> noise_signal = modulation.signal;
 
@@ -86,7 +87,7 @@ void test_modulation(ModulationType mod_type) {
         demodulation.demod(static_cast<demodQAM::ModulationType>(mod_type));
 
         double ber = BER(binary, demodulation.binary);
-        cout << "sigma = " <<sigm << "       BER = " <<  ber << endl;
+        cout << "sigma = " << sigm << "       BER = " <<  ber << endl;
     }
 }
 

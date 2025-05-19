@@ -19,7 +19,7 @@ public:
     void demod(ModulationType modTYPE) {
         binary.clear();
 
-        int numSamples = 10;
+        int numSamples = 1000;
 
         int total_symbols = signal.size() / numSamples;
 
@@ -41,7 +41,7 @@ public:
 
             avg_I = sum_I / numSamples;
             avg_Q = sum_Q / numSamples;
-           //cout << "avgI:" << avg_I << "  avgQ: " << avg_Q << endl;
+
             if (modTYPE == QPSK) {
                 int bit1, bit2;
 
@@ -58,23 +58,36 @@ public:
 
                 int bit_I0, bit_I1, bit_Q0, bit_Q1;
 
-                if      (avg_I < -1.25)      { bit_I1 = 0; bit_I0 = 0; }
-                else if (avg_I < 0)         { bit_I1 = 0; bit_I0 = 1; }
-                else if (avg_I < 1.25)       { bit_I1 = 1; bit_I0 = 0; }
-                else                        { bit_I1 = 1; bit_I0 = 1; }
+                if      (avg_I < -1)         { bit_I1 = 0; bit_I0 = 0; }
+                else if (avg_I < 0)          { bit_I1 = 0; bit_I0 = 1; }
+                else if (avg_I < 1)           { bit_I1 = 1; bit_I0 = 0; }
+                else                         { bit_I1 = 1; bit_I0 = 1; }
 
-                if      (avg_Q < -1.25)      { bit_Q1 = 0; bit_Q0 = 0; }
-                else if (avg_Q < 0)         { bit_Q1 = 0; bit_Q0 = 1; }
-                else if (avg_Q < 1.25)       { bit_Q1 = 1; bit_Q0 = 0; }
-                else                        { bit_Q1 = 1; bit_Q0 = 1; }
+                if      (avg_Q < -1)         { bit_Q1 = 0; bit_Q0 = 0; }
+                else if (avg_Q < 0)          { bit_Q1 = 0; bit_Q0 = 1; }
+                else if (avg_Q < 1)          { bit_Q1 = 1; bit_Q0 = 0; }
+                else                         { bit_Q1 = 1; bit_Q0 = 1; }
 
+                
                 binary.push_back(bit_I1);
                 binary.push_back(bit_I0);
                 binary.push_back(bit_Q1);
                 binary.push_back(bit_Q0);
+
+                /*
+                cout << "bit_I1: " << bit_I1 << endl;
+                cout << "bit_I0: " << bit_I0 << endl;
+                cout << "bit_Q0: " << bit_Q1 << endl;
+                cout << "bit_Q1: " << bit_Q1 << endl;
+                */
+
             }
 
             else if (modTYPE == QAM64) {
+				avg_I = avg_I ;   
+				avg_Q = avg_Q ;
+
+                //cout << "avgIqwe:" << avg_I << "  avgQ: " << avg_Q << endl;
 
                 int bit_I0, bit_I1, bit_I2, bit_Q0, bit_Q1, bit_Q2;
 
@@ -82,9 +95,9 @@ public:
                 if      (avg_I < -3)        { bit_I2 = 0; bit_I1 = 0; bit_I0 = 0; }
                 else if (avg_I < -2)        { bit_I2 = 0; bit_I1 = 0; bit_I0 = 1; }
                 else if (avg_I < -1)        { bit_I2 = 0; bit_I1 = 1; bit_I0 = 0; }
-                else if (avg_I < 0)         { bit_I2 = 1; bit_I1 = 0; bit_I0 = 0; }
-                else if (avg_I < 1)         { bit_I2 = 1; bit_I1 = 0; bit_I0 = 1; }
-                else if (avg_I < 2)         { bit_I2 = 1; bit_I1 = 1; bit_I0 = 0; }
+                else if (avg_I < 0)         { bit_I2 = 0; bit_I1 = 1; bit_I0 = 1; }
+                else if (avg_I < 1)         { bit_I2 = 1; bit_I1 = 0; bit_I0 = 0; }
+                else if (avg_I < 2)         { bit_I2 = 1; bit_I1 = 0; bit_I0 = 1; }
                 else if (avg_I < 3)         { bit_I2 = 1; bit_I1 = 1; bit_I0 = 0; }
                 else                        { bit_I2 = 1; bit_I1 = 1; bit_I0 = 1; }
 
